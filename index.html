@@ -4,625 +4,725 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mohammad Hammad — EREN 𒉭</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0c0b09;
-  --card:#181612;
+  --bg:#080705;
+  --bg2:#0e0c09;
+  --card:#141210;
+  --card2:#1a1714;
   --gold:#c9a84c;
   --gold2:#e8c97a;
-  --gold-dim:rgba(201,168,76,0.10);
+  --gold3:#f5dfa0;
+  --gold-glow:rgba(201,168,76,0.12);
   --gold-line:rgba(201,168,76,0.18);
-  --text:#e8e2d6;
-  --muted:rgba(232,226,214,0.45);
-  --border:rgba(201,168,76,0.14);
-  --border-h:rgba(201,168,76,0.38);
+  --gold-dim:rgba(201,168,76,0.06);
+  --text:#ede8de;
+  --text2:#c8c0b0;
+  --muted:rgba(232,220,200,0.42);
+  --border:rgba(201,168,76,0.12);
+  --border-h:rgba(201,168,76,0.36);
+  --r:20px;
+  --r-sm:12px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;scroll-snap-type:y mandatory;}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Syne',sans-serif;
-  overflow-x:hidden;
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+#cur,#cur-trail{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;transform:translate(-50%,-50%);}
+#cur{width:10px;height:10px;background:var(--gold);transition:width .15s,height .15s,background .15s;}
+#cur-trail{width:36px;height:36px;border:1px solid rgba(201,168,76,.45);transition:left .12s ease,top .12s ease;}
+body:has(a:hover,button:hover,.p-card:hover) #cur{width:22px;height:22px;background:var(--gold2);}
+
+/* NOISE OVERLAY */
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:20px 56px;
-  backdrop-filter:blur(18px);
-  background:rgba(12,11,9,0.75);
-  border-bottom:0.5px solid var(--border);
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;
+  padding:22px 64px;backdrop-filter:blur(24px) saturate(1.4);
+  background:rgba(8,7,5,0.78);border-bottom:0.5px solid var(--border);
 }
-.nav-logo{
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;font-size:21px;
-  color:var(--gold);letter-spacing:1px;
-}
-.nav-links{display:flex;gap:32px;list-style:none;}
-.nav-links a{
-  text-decoration:none;color:var(--muted);
-  font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
-  transition:color .25s;
-}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--gold);letter-spacing:1px;text-decoration:none;}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:10.5px;letter-spacing:2.8px;text-transform:uppercase;transition:color .25s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:0.5px;background:var(--gold);transition:width .3s;}
 .nav-links a:hover{color:var(--gold);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{padding:9px 22px;border:0.5px solid var(--gold);border-radius:100px;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:all .3s;}
+.nav-cta:hover{background:var(--gold);color:#080705;}
 
-/* ── SECTION BASE ── */
-.chapter{
-  min-height:100vh;
-  scroll-snap-align:start;
-  display:flex;flex-direction:column;justify-content:center;
-  position:relative;overflow:hidden;
-  padding:120px 56px 80px;
-}
+/* ── HERO ── */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:120px 64px 80px;position:relative;overflow:hidden;}
+.hero-bg-num{position:absolute;right:-60px;bottom:-80px;font-family:'Cormorant Garamond',serif;font-size:clamp(200px,30vw,420px);font-weight:300;
+  color:rgba(201,168,76,0.03);line-height:1;pointer-events:none;user-select:none;letter-spacing:-20px;}
+.hero-line-v{position:absolute;left:50%;top:0;bottom:0;width:0.5px;background:linear-gradient(to bottom,transparent,var(--border) 30%,var(--border) 70%,transparent);pointer-events:none;}
 
-/* ── CHAPTER NUMBERS (bg watermark) ── */
-.chapter-num{
-  position:absolute;
-  right:40px;top:50%;transform:translateY(-50%);
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(120px,18vw,220px);
-  font-weight:300;color:rgba(201,168,76,0.04);
-  line-height:1;pointer-events:none;user-select:none;
-}
+.hero-left{position:relative;z-index:1;}
+.hero-eyebrow{display:flex;align-items:center;gap:14px;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:28px;opacity:0;animation:fadeUp .8s .1s forwards;}
+.hero-eyebrow::before{content:'';display:block;width:40px;height:0.5px;background:linear-gradient(90deg,var(--gold),transparent);}
+.hero-name{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,8vw,110px);font-weight:300;line-height:.9;letter-spacing:-3px;opacity:0;animation:fadeUp .8s .25s forwards;}
+.hero-name span{display:block;}
+.hero-name em{display:block;font-style:italic;color:var(--gold);letter-spacing:-2px;}
+.hero-alias{margin-top:24px;font-size:13px;letter-spacing:6px;color:var(--muted);text-transform:uppercase;opacity:0;animation:fadeUp .8s .4s forwards;}
+.hero-rule{width:60px;height:0.5px;background:linear-gradient(90deg,var(--gold),transparent);margin:28px 0;opacity:0;animation:fadeUp .8s .5s forwards;}
+.hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2vw,22px);font-style:italic;font-weight:300;color:var(--muted);max-width:440px;line-height:1.7;opacity:0;animation:fadeUp .8s .6s forwards;}
+.hero-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:32px;opacity:0;animation:fadeUp .8s .75s forwards;}
+.chip{padding:7px 18px;border:0.5px solid var(--border);border-radius:100px;font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);background:var(--gold-dim);transition:all .3s;cursor:default;}
+.chip:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.09);}
+.hero-actions{display:flex;gap:14px;margin-top:36px;opacity:0;animation:fadeUp .8s .9s forwards;}
+.btn-primary{padding:13px 30px;background:var(--gold);color:#080705;border:none;border-radius:100px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:all .3s;}
+.btn-primary:hover{background:var(--gold2);transform:translateY(-2px);}
+.btn-ghost{padding:13px 30px;border:0.5px solid var(--border-h);border-radius:100px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--text2);text-decoration:none;transition:all .3s;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
 
-/* ── EYEBROW ── */
-.eyebrow{
-  display:flex;align-items:center;gap:14px;
-  font-size:10px;letter-spacing:4px;text-transform:uppercase;
-  color:var(--gold);margin-bottom:22px;
-}
-.eyebrow::before{
-  content:'';display:block;
-  width:36px;height:0.5px;background:var(--gold);
-}
+.hero-right{display:flex;flex-direction:column;gap:12px;position:relative;z-index:1;opacity:0;animation:fadeUp .8s .5s forwards;}
+.hero-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:26px 30px;position:relative;overflow:hidden;transition:all .4s;}
+.hero-card::before{content:'';position:absolute;left:0;top:0;width:2px;height:100%;background:linear-gradient(to bottom,transparent,var(--gold),transparent);opacity:0;transition:opacity .4s;}
+.hero-card:hover{border-color:var(--border-h);transform:translateX(8px);}
+.hero-card:hover::before{opacity:1;}
+.hc-val{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--gold);line-height:1;}
+.hc-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.hc-row{display:flex;justify-content:space-between;align-items:flex-end;}
+.hc-icon{font-size:28px;opacity:.5;}
 
-/* ══════════════
-   01 · OPENING
-══════════════ */
-#opening{
-  align-items:flex-start;
-  background:var(--bg);
-  padding-top:140px;
-}
-#opening .chapter-num{
-  font-size:clamp(180px,26vw,360px);
-  right:-20px;bottom:-40px;top:auto;transform:none;
-}
+.scroll-indicator{position:absolute;bottom:40px;left:64px;display:flex;align-items:center;gap:16px;opacity:0;animation:fadeIn 1s 1.4s forwards;}
+.scroll-indicator span{font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);}
+.scroll-line{width:48px;height:0.5px;background:linear-gradient(90deg,var(--gold),transparent);animation:scrollPulse 2.4s ease-in-out infinite;}
 
-.opening-kicker{
-  font-size:11px;letter-spacing:5px;text-transform:uppercase;
-  color:var(--gold);margin-bottom:28px;
-  opacity:0;animation:fadeUp .7s .1s forwards;
-}
-.opening-name{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(56px,10vw,120px);
-  font-weight:300;line-height:.95;letter-spacing:-2px;
-  opacity:0;animation:fadeUp .7s .25s forwards;
-}
-.opening-name em{display:block;font-style:italic;color:var(--gold);}
-.opening-alias{
-  margin-top:20px;font-size:13px;letter-spacing:5px;
-  color:var(--muted);text-transform:uppercase;
-  opacity:0;animation:fadeUp .7s .4s forwards;
-}
-.opening-rule{
-  width:80px;height:0.5px;
-  background:linear-gradient(90deg,var(--gold),transparent);
-  margin:32px 0;
-  opacity:0;animation:fadeUp .7s .55s forwards;
-}
-.opening-line{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(17px,2.2vw,24px);
-  font-style:italic;font-weight:300;
-  color:var(--muted);max-width:520px;line-height:1.65;
-  opacity:0;animation:fadeUp .7s .7s forwards;
-}
-.opening-chips{
-  display:flex;gap:10px;flex-wrap:wrap;margin-top:36px;
-  opacity:0;animation:fadeUp .7s .85s forwards;
-}
-.chip{
-  padding:6px 16px;border:0.5px solid var(--border);
-  border-radius:100px;font-size:10px;letter-spacing:1.5px;
-  text-transform:uppercase;color:var(--muted);
-  background:rgba(201,168,76,0.04);transition:all .3s;
-}
-.chip:hover{border-color:var(--gold);color:var(--gold);}
-.scroll-cue{
-  position:absolute;bottom:40px;left:56px;
-  display:flex;align-items:center;gap:14px;
-  font-size:10px;letter-spacing:3px;text-transform:uppercase;
-  color:var(--muted);
-  opacity:0;animation:fadeIn 1s 1.3s forwards;
-}
-.scroll-line{
-  width:40px;height:0.5px;
-  background:linear-gradient(90deg,var(--gold),transparent);
-  animation:scrollPulse 2s ease-in-out infinite;
-}
-
-/* ══════════════
-   02 · ABOUT
-══════════════ */
-#about{background:#0e0d0b;border-top:0.5px solid var(--border);}
-.about-inner{
-  max-width:1060px;margin:0 auto;width:100%;
-  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
-}
-.about-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(36px,5.5vw,62px);
-  font-weight:300;line-height:1.05;margin-bottom:32px;
-}
-.about-title em{font-style:italic;color:var(--gold);}
-.about-body{
-  font-family:'Cormorant Garamond',serif;
-  font-size:19px;font-weight:300;line-height:1.85;color:var(--muted);
-}
+/* ── ABOUT ── */
+#about{background:var(--bg2);border-top:0.5px solid var(--border);padding:120px 64px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.eyebrow{display:flex;align-items:center;gap:14px;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:22px;}
+.eyebrow::before{content:'';display:block;width:36px;height:0.5px;background:var(--gold);}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,64px);font-weight:300;line-height:1.0;margin-bottom:52px;}
+.section-title em{font-style:italic;color:var(--gold);}
+.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:center;}
+.about-body{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;line-height:1.85;color:var(--muted);}
 .about-body strong{color:var(--text);font-weight:400;}
 .about-body em{color:var(--gold);font-style:italic;}
-.about-body p+p{margin-top:18px;}
-.about-right{display:flex;flex-direction:column;gap:14px;}
-.stat-block{
-  background:var(--card);border:0.5px solid var(--border);
-  border-radius:18px;padding:24px 28px;
-  display:flex;align-items:baseline;justify-content:space-between;
-  transition:all .35s;position:relative;overflow:hidden;
-}
-.stat-block::after{
-  content:'';position:absolute;left:0;top:0;
-  width:2px;height:100%;background:var(--gold);opacity:0;transition:opacity .35s;
-}
-.stat-block:hover{border-color:var(--border-h);transform:translateX(6px);}
-.stat-block:hover::after{opacity:1;}
-.stat-val{
-  font-family:'Cormorant Garamond',serif;
-  font-size:40px;font-weight:300;color:var(--gold);
-}
-.stat-lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-align:right;}
+.about-body p+p{margin-top:20px;}
+.about-right{display:flex;flex-direction:column;gap:12px;}
+.stat-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;transition:all .4s;position:relative;overflow:hidden;cursor:default;}
+.stat-card::after{content:'';position:absolute;left:0;top:0;width:0;height:100%;background:linear-gradient(90deg,rgba(201,168,76,.06),transparent);transition:width .4s;}
+.stat-card:hover{border-color:var(--border-h);transform:translateX(10px);}
+.stat-card:hover::after{width:100%;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:var(--gold);line-height:1;}
+.stat-label{font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);text-align:right;max-width:120px;}
 
-/* ══════════════
-   03 · PROJECTS
-══════════════ */
-#projects{
-  background:#0c0b09;border-top:0.5px solid var(--border);
-  justify-content:flex-start;
-  padding-top:140px;padding-bottom:80px;
-}
-.projects-inner{max-width:1060px;margin:0 auto;width:100%;}
-.projects-head{
-  display:flex;align-items:flex-end;justify-content:space-between;
-  margin-bottom:48px;
-}
-.projects-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(36px,5.5vw,62px);
-  font-weight:300;line-height:1.05;
-}
-.projects-title em{font-style:italic;color:var(--gold);}
-.projects-count{
-  font-family:'Cormorant Garamond',serif;
-  font-size:60px;font-weight:300;color:rgba(201,168,76,0.15);line-height:1;
-}
-.projects-grid{
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  gap:16px;
-}
-.p-card{
-  background:var(--card);border:0.5px solid var(--border);
-  border-radius:20px;padding:32px 30px 28px;
-  text-decoration:none;color:inherit;
-  display:flex;flex-direction:column;
-  transition:all .4s cubic-bezier(.16,1,.3,1);
-  position:relative;overflow:hidden;cursor:pointer;
-}
-.p-card::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 20% 20%,rgba(201,168,76,0.06),transparent 55%);
-  opacity:0;transition:opacity .4s;
-}
-.p-card:hover{
-  border-color:var(--border-h);
-  transform:translateY(-7px);
-  box-shadow:0 28px 56px rgba(0,0,0,.5);
-}
-.p-card:hover::before{opacity:1;}
-.p-num{font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;}
-.p-name{
-  font-family:'Cormorant Garamond',serif;
-  font-size:26px;font-weight:400;color:var(--text);margin-bottom:10px;line-height:1.2;
-}
-.p-desc{font-size:13px;color:var(--muted);line-height:1.65;flex:1;margin-bottom:22px;}
-.p-arrow{
-  font-size:11px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--gold);display:inline-flex;align-items:center;gap:8px;transition:gap .3s;
-}
-.p-card:hover .p-arrow{gap:14px;}
+/* ── TIMELINE / JOURNEY ── */
+#journey{background:var(--bg);border-top:0.5px solid var(--border);padding:120px 64px;}
+.timeline{position:relative;padding-left:28px;margin-top:12px;}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0.5px;background:linear-gradient(to bottom,transparent,var(--gold-line) 10%,var(--gold-line) 90%,transparent);}
+.t-item{position:relative;padding:0 0 52px 44px;}
+.t-item:last-child{padding-bottom:0;}
+.t-dot{position:absolute;left:-7px;top:6px;width:14px;height:14px;border-radius:50%;border:1.5px solid var(--gold);background:var(--bg);transition:all .4s;}
+.t-item:hover .t-dot{background:var(--gold);}
+.t-year{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.t-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:var(--text);margin-bottom:8px;line-height:1.2;}
+.t-desc{font-size:14px;color:var(--muted);line-height:1.7;max-width:560px;}
+.t-badge{display:inline-block;margin-top:12px;padding:4px 14px;border:0.5px solid var(--border);border-radius:100px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);}
+
+/* ── PROJECTS ── */
+#projects{background:var(--bg2);border-top:0.5px solid var(--border);padding:120px 64px;}
+.projects-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px;}
+.projects-count{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:rgba(201,168,76,.1);line-height:1;}
+.projects-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;}
+
+.p-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:36px 32px 30px;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all .45s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden;}
+.p-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 25% 25%,rgba(201,168,76,.08),transparent 60%);opacity:0;transition:opacity .45s;}
+.p-card:hover{border-color:var(--border-h);transform:translateY(-9px);box-shadow:0 32px 64px rgba(0,0,0,.6);}
+.p-card:hover::after{opacity:1;}
+.p-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+.p-num{font-size:9.5px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;}
+.p-ext{width:28px;height:28px;border:0.5px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .3s;flex-shrink:0;}
+.p-card:hover .p-ext{border-color:var(--gold);background:var(--gold);}
+.p-ext-icon{font-size:11px;color:var(--muted);transition:color .3s;}
+.p-card:hover .p-ext-icon{color:#080705;}
+.p-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;line-height:1.15;margin-bottom:12px;color:var(--text);}
+.p-desc{font-size:13.5px;color:var(--muted);line-height:1.7;flex:1;margin-bottom:24px;}
+.p-tech{display:flex;gap:6px;flex-wrap:wrap;}
+.p-tag{padding:4px 12px;border:0.5px solid var(--border);border-radius:100px;font-size:10px;letter-spacing:1px;color:var(--muted);}
 .p-feat{grid-column:1/8;}
-.p-sm1{grid-column:8/13;}
-.p-sm2{grid-column:1/5;}
-.p-sm3{grid-column:5/9;}
-.p-sm4{grid-column:9/13;}
+.p-tall{grid-column:8/13;grid-row:1/3;}
+.p-sm1{grid-column:1/5;}
+.p-sm2{grid-column:5/8;}
+.p-wide{grid-column:8/13;}
 
-/* ══════════════
-   04 · INTERESTS
-══════════════ */
-#interests{background:#0e0d0b;border-top:0.5px solid var(--border);}
-.interests-inner{max-width:1060px;margin:0 auto;width:100%;}
-.interests-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(36px,5.5vw,62px);
-  font-weight:300;line-height:1.05;margin-bottom:52px;
-}
-.interests-title em{font-style:italic;color:var(--gold);}
-.interests-list{display:flex;flex-direction:column;}
-.interest-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:26px 0;border-bottom:0.5px solid var(--border);
-  transition:all .3s;cursor:default;
-}
-.interest-row:first-child{border-top:0.5px solid var(--border);}
-.interest-row:hover .ir-name{color:var(--gold);}
-.interest-row:hover .ir-num{opacity:1;}
-.ir-left{display:flex;align-items:center;gap:28px;}
-.ir-num{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--gold);opacity:.35;transition:opacity .3s;letter-spacing:1px;}
-.ir-icon{font-size:26px;width:38px;text-align:center;}
-.ir-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;transition:color .3s;}
-.ir-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
-.philosophy-block{
-  margin-top:56px;background:var(--card);
-  border:0.5px solid var(--border);border-radius:20px;
-  padding:48px 52px;position:relative;overflow:hidden;
-}
-.philosophy-block::before{
-  content:'"';position:absolute;top:-30px;left:20px;
-  font-family:'Cormorant Garamond',serif;font-size:240px;font-weight:300;
-  color:rgba(201,168,76,0.04);line-height:1;pointer-events:none;
-}
-.phil-text{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(18px,2.5vw,26px);
-  font-style:italic;font-weight:300;line-height:1.65;
-  color:var(--text);max-width:680px;
-}
-.phil-text em{color:var(--gold);font-style:normal;}
-.phil-attr{margin-top:20px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);}
+/* Featured card extras */
+.p-card.p-feat .p-name{font-size:36px;}
+.p-card.p-tall{justify-content:flex-end;}
+.p-card.p-tall .p-art{position:absolute;top:0;left:0;right:0;height:55%;display:flex;align-items:center;justify-content:center;font-size:72px;opacity:.06;font-family:'Cormorant Garamond',serif;font-style:italic;border-bottom:0.5px solid var(--border);}
 
-/* ══════════════
-   05 · CONTACT
-══════════════ */
-#contact{background:#0c0b09;border-top:0.5px solid var(--border);}
-.contact-inner{
-  max-width:1060px;margin:0 auto;width:100%;
-  display:grid;grid-template-columns:1fr 1fr;gap:80px;
-}
-.contact-left h2{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(36px,5.5vw,58px);
-  font-weight:300;line-height:1.05;margin-bottom:20px;
-}
-.contact-left h2 em{font-style:italic;color:var(--gold);}
-.contact-left p{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:36px;}
-.socials{display:flex;flex-direction:column;gap:10px;}
-.s-pill{
-  display:flex;align-items:center;gap:14px;
-  padding:13px 18px;background:var(--card);
-  border:0.5px solid var(--border);border-radius:12px;
-  text-decoration:none;color:var(--muted);font-size:13px;
-  transition:all .3s;
-}
-.s-pill:hover{border-color:var(--gold);color:var(--gold);transform:translateX(6px);}
-.s-pill svg{width:15px;height:15px;opacity:.7;flex-shrink:0;transition:opacity .3s;}
+/* ── INTERESTS ── */
+#interests{background:var(--bg);border-top:0.5px solid var(--border);padding:120px 64px;}
+.interests-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+.interest-list{display:flex;flex-direction:column;margin-top:12px;}
+.i-row{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:0.5px solid var(--border);transition:all .3s;cursor:default;position:relative;}
+.i-row::before{content:'';position:absolute;left:-16px;top:50%;transform:translateY(-50%);width:3px;height:0;background:var(--gold);border-radius:2px;transition:height .3s;}
+.i-row:first-child{border-top:0.5px solid var(--border);}
+.i-row:hover::before{height:50%;}
+.i-row:hover .ir-name{color:var(--gold);padding-left:8px;}
+.ir-left{display:flex;align-items:center;gap:22px;}
+.ir-num{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--gold);opacity:.3;width:24px;transition:opacity .3s;font-style:italic;}
+.i-row:hover .ir-num{opacity:1;}
+.ir-icon{font-size:22px;width:36px;text-align:center;}
+.ir-name{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:300;transition:all .3s;}
+.ir-tag{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);max-width:200px;text-align:right;line-height:1.5;}
+
+.philosophy-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:52px 48px;position:relative;overflow:hidden;}
+.philosophy-card::before{content:'"';position:absolute;top:-60px;left:10px;font-family:'Cormorant Garamond',serif;font-size:260px;font-weight:300;color:rgba(201,168,76,.035);line-height:1;pointer-events:none;}
+.phil-label{font-size:9.5px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;}
+.phil-text{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.2vw,24px);font-style:italic;font-weight:300;line-height:1.75;color:var(--text);}
+.phil-text em{color:var(--gold);font-style:normal;font-weight:400;}
+.phil-attr{margin-top:24px;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);}
+.phil-rule{width:36px;height:0.5px;background:var(--gold);margin:20px 0 0;}
+
+/* ── SKILLS ── */
+#skills{background:var(--bg2);border-top:0.5px solid var(--border);padding:120px 64px;}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px;}
+.skill-cat{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:30px 28px;transition:all .35s;}
+.skill-cat:hover{border-color:var(--border-h);}
+.sk-icon{font-size:22px;margin-bottom:14px;}
+.sk-title{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.sk-list{display:flex;flex-direction:column;gap:10px;}
+.sk-item{display:flex;flex-direction:column;gap:5px;}
+.sk-name{font-size:13px;color:var(--text2);}
+.sk-bar-bg{height:2px;background:rgba(201,168,76,.1);border-radius:2px;}
+.sk-bar{height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:2px;transition:width 1s ease;}
+
+/* ── CONTACT ── */
+#contact{background:var(--bg);border-top:0.5px solid var(--border);padding:120px 64px;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;}
+.contact-desc{font-size:14.5px;color:var(--muted);line-height:1.8;margin-bottom:40px;max-width:400px;}
+.socials{display:flex;flex-direction:column;gap:8px;}
+.s-pill{display:flex;align-items:center;gap:16px;padding:15px 20px;background:var(--card);border:0.5px solid var(--border);border-radius:var(--r-sm);text-decoration:none;color:var(--muted);font-size:13px;transition:all .3s;letter-spacing:.5px;}
+.s-pill svg{width:16px;height:16px;opacity:.55;flex-shrink:0;transition:all .3s;}
+.s-pill:hover{border-color:var(--gold);color:var(--gold);transform:translateX(8px);}
 .s-pill:hover svg{opacity:1;}
+.s-arrow{margin-left:auto;font-size:11px;opacity:0;transition:all .3s;}
+.s-pill:hover .s-arrow{opacity:1;}
+
 .contact-form{display:flex;flex-direction:column;gap:12px;}
-.contact-form input,.contact-form textarea{
-  background:var(--card);border:0.5px solid var(--border);
-  border-radius:12px;padding:14px 18px;color:var(--text);
-  font-family:'Syne',sans-serif;font-size:14px;
-  outline:none;resize:none;transition:border-color .3s;
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.contact-form input,.contact-form textarea,.contact-form select{
+  background:var(--card);border:0.5px solid var(--border);border-radius:var(--r-sm);
+  padding:15px 20px;color:var(--text);font-family:'Syne',sans-serif;font-size:13.5px;
+  outline:none;resize:none;transition:border-color .3s,background .3s;width:100%;
 }
-.contact-form input:focus,.contact-form textarea:focus{border-color:var(--gold);}
-.contact-form input::placeholder,.contact-form textarea::placeholder{color:var(--muted);font-size:13px;}
-.btn-send{
-  background:var(--gold);color:#0c0b09;border:none;border-radius:12px;
-  padding:14px;font-family:'Syne',sans-serif;
-  font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-  cursor:pointer;transition:all .3s;
-}
-.btn-send:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,.22);}
+.contact-form input:focus,.contact-form textarea:focus{border-color:var(--gold);background:var(--card2);}
+.contact-form input::placeholder,.contact-form textarea::placeholder{color:var(--muted);font-size:12.5px;}
+.form-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block;}
+.field-group{display:flex;flex-direction:column;}
+.btn-send{background:var(--gold);color:#08070500;border:none;border-radius:var(--r-sm);padding:15px;
+  font-family:'Syne',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:2.5px;
+  text-transform:uppercase;cursor:pointer;transition:all .3s;color:#08070500;}
+.btn-send{color:#08070500;}
+.btn-send-text{color:#08070a;}
+.btn-send:hover{background:var(--gold2);transform:translateY(-3px);box-shadow:0 12px 36px rgba(201,168,76,.2);}
+.btn-send-inner{color:#08070a;}
 
 /* FOOTER */
-footer{
-  border-top:0.5px solid var(--border);padding:32px 56px;
-  display:flex;justify-content:space-between;align-items:center;
-}
-.f-logo{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--gold);}
-.f-copy{font-size:11px;color:var(--muted);letter-spacing:1px;}
+footer{border-top:0.5px solid var(--border);padding:36px 64px;display:flex;justify-content:space-between;align-items:center;}
+.f-left{display:flex;align-items:center;gap:20px;}
+.f-logo{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:var(--gold);}
+.f-copy{font-size:11px;color:var(--muted);letter-spacing:.8px;}
+.f-right{font-size:11px;color:var(--muted);letter-spacing:1px;}
 
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+/* REVEAL ANIMATION */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .75s ease,transform .75s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-l{opacity:0;transform:translateX(-28px);transition:opacity .75s ease,transform .75s ease;}
+.reveal-l.visible{opacity:1;transform:translateX(0);}
+.reveal-r{opacity:0;transform:translateX(28px);transition:opacity .75s ease,transform .75s ease;}
+.reveal-r.visible{opacity:1;transform:translateX(0);}
 
 /* KEYFRAMES */
-@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-@keyframes scrollPulse{0%,100%{opacity:.5;}50%{opacity:1;}}
+@keyframes scrollPulse{0%,100%{opacity:.4;width:28px;}50%{opacity:1;width:56px;}}
 
 /* RESPONSIVE */
-@media(max-width:900px){
-  .chapter{padding:120px 24px 60px;}
+@media(max-width:980px){
   nav{padding:18px 24px;}
-  .nav-links{display:none;}
-  .about-inner,.contact-inner{grid-template-columns:1fr;gap:40px;}
+  .nav-links,.nav-cta{display:none;}
+  #hero{grid-template-columns:1fr;padding:120px 24px 80px;}
+  .hero-line-v,.hero-right{display:none;}
+  .hero-bg-num{font-size:28vw;}
+  #about,#journey,#projects,#interests,#skills,#contact{padding:80px 24px;}
+  .about-grid,.interests-grid,.contact-grid{grid-template-columns:1fr;gap:40px;}
   .projects-grid{grid-template-columns:1fr 1fr;}
-  .p-feat,.p-sm1,.p-sm2,.p-sm3,.p-sm4{grid-column:auto;}
-  .chapter-num{display:none;}
-  footer{padding:24px;flex-direction:column;gap:10px;text-align:center;}
+  .p-feat,.p-tall,.p-sm1,.p-sm2,.p-wide{grid-column:auto;grid-row:auto;}
+  .skills-grid{grid-template-columns:1fr 1fr;}
+  footer{padding:24px;flex-direction:column;gap:12px;text-align:center;}
 }
 @media(max-width:600px){
-  .projects-grid{grid-template-columns:1fr;}
-  .chapter{padding:110px 16px 60px;}
+  .projects-grid,.skills-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 
+<div id="cur"></div>
+<div id="cur-trail"></div>
+
 <nav>
-  <div class="nav-logo">EREN 𒉭</div>
+  <a class="nav-logo" href="#hero">EREN 𒉭</a>
   <ul class="nav-links">
-    <li><a href="#opening">Home</a></li>
+    <li><a href="#hero">Home</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="#journey">Journey</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#interests">Interests</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <a class="nav-cta" href="#contact">Say Hello</a>
 </nav>
 
-<!-- ══ 01 · OPENING ══ -->
-<section class="chapter" id="opening">
-  <div class="chapter-num">01</div>
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-line-v"></div>
+  <div class="hero-bg-num">MH</div>
 
-  <div class="opening-kicker">New Delhi, India &nbsp;·&nbsp; Class 12 &nbsp;·&nbsp; 2026</div>
-
-  <h1 class="opening-name">
-    Mohammad<br><em>Hammad</em>
-  </h1>
-
-  <div class="opening-alias">EREN 𒉭</div>
-  <div class="opening-rule"></div>
-
-  <p class="opening-line">
-    Chasing medicine by day, building clean things by night,
-    a student who can't stay in just one lane.
-  </p>
-
-  <div class="opening-chips">
-    <span class="chip">NEET Aspirant</span>
-    <span class="chip">Developer</span>
-    <span class="chip">Badminton</span>
-    <span class="chip">UI Design</span>
-    <span class="chip">Ancient Arts</span>
-    <span class="chip">New Delhi</span>
+  <div class="hero-left">
+    <div class="hero-eyebrow">New Delhi, India &nbsp;·&nbsp; Class 12 &nbsp;·&nbsp; 2026</div>
+    <h1 class="hero-name">
+      <span>Mohammad</span>
+      <em>Hammad</em>
+    </h1>
+    <div class="hero-alias">EREN 𒉭</div>
+    <div class="hero-rule"></div>
+    <p class="hero-tagline">Chasing medicine by day, building clean things by night — a student who refuses to stay in just one lane.</p>
+    <div class="hero-chips">
+      <span class="chip">NEET Aspirant</span>
+      <span class="chip">Developer</span>
+      <span class="chip">Badminton</span>
+      <span class="chip">UI Design</span>
+      <span class="chip">Ancient Arts</span>
+      <span class="chip">New Delhi</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">View Work</a>
+      <a href="#contact" class="btn-ghost">Get in touch</a>
+    </div>
   </div>
 
-  <div class="scroll-cue">
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="hc-row">
+        <div>
+          <div class="hc-val">97%</div>
+          <div class="hc-label">Class 10 Score</div>
+        </div>
+        <div class="hc-icon">🏆</div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-row">
+        <div>
+          <div class="hc-val">5+</div>
+          <div class="hc-label">Projects Shipped</div>
+        </div>
+        <div class="hc-icon">🚀</div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-row">
+        <div>
+          <div class="hc-val">∞</div>
+          <div class="hc-label">Curiosity Remaining</div>
+        </div>
+        <div class="hc-icon">🔭</div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-row">
+        <div>
+          <div class="hc-val">01</div>
+          <div class="hc-label">Goal: MBBS</div>
+        </div>
+        <div class="hc-icon">🩺</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
     <div class="scroll-line"></div>
     <span>Scroll to explore</span>
   </div>
 </section>
 
-<!-- ══ 02 · ABOUT ══ -->
-<section class="chapter" id="about">
-  <div class="chapter-num">02</div>
-  <div class="about-inner">
-
-    <div class="about-left reveal">
-      <div class="eyebrow">About me</div>
-      <h2 class="about-title">One student,<br><em>many obsessions</em></h2>
-      <div class="about-body">
-        <p>I'm <strong>Mohammad Hammad</strong>, 18, studying at Syed Abid Husain Sr. Sec School, Jamia Millia Islamia. Finished Class 10 with <em>97%</em>. That's the CV part.</p>
-        <p>The real me is on a badminton court. It's not just a sport  it's the one place my head goes completely quiet. I've played soccer too, on dusty Delhi grounds, full commitment, zero regrets about the bruises.</p>
-        <p>Late nights go to <strong>building things</strong>  small sites, UI experiments, tools I wanted to exist. And somewhere in between, I fall into <em>ancient art</em>: old scripts, forgotten aesthetics, beauty that time couldn't erase.</p>
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="reveal-l">
+        <div class="eyebrow">About me</div>
+        <h2 class="section-title">One student,<br><em>many obsessions</em></h2>
+        <div class="about-body">
+          <p>I'm <strong>Mohammad Hammad</strong>, 18, studying at Syed Abid Husain Sr. Sec School, Jamia Millia Islamia. Finished Class 10 with <em>97%</em>. That's the résumé part.</p>
+          <p>The real me is on a badminton court. It's not just a sport — it's the one place my head goes completely quiet. I've played soccer too, on dusty Delhi grounds, full commitment, zero regrets about the bruises.</p>
+          <p>Late nights go to <strong>building things</strong> — small sites, UI experiments, tools I wanted to exist. And somewhere in between, I fall into <em>ancient art</em>: old scripts, forgotten aesthetics, beauty that time couldn't erase.</p>
+        </div>
+      </div>
+      <div class="about-right reveal-r">
+        <div class="stat-card">
+          <div class="stat-num">97%</div>
+          <div class="stat-label">Class 10 Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Projects Shipped</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">90%</div>
+          <div class="stat-label">Time on NEET Prep</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Curiosity Remaining</div>
+        </div>
       </div>
     </div>
-
-    <div class="about-right reveal">
-      <div class="stat-block">
-        <div class="stat-val">97%</div>
-        <div class="stat-lbl">Class 10<br>Score</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-val">5+</div>
-        <div class="stat-lbl">Projects<br>Shipped</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-val">90%</div>
-        <div class="stat-lbl">Time on<br>NEET Prep</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-val">∞</div>
-        <div class="stat-lbl">Curiosity<br>Remaining</div>
-      </div>
-    </div>
-
   </div>
 </section>
 
-<!-- ══ 03 · PROJECTS ══ -->
-<section class="chapter" id="projects">
-  <div class="chapter-num">03</div>
-  <div class="projects-inner">
+<!-- ══ JOURNEY ══ -->
+<section id="journey">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="eyebrow">My story</div>
+      <h2 class="section-title">The <em>journey</em> so far</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-year">2020</div>
+        <div class="t-title">First line of code</div>
+        <p class="t-desc">Curiosity turned into a habit. Started building small tools and experimenting with HTML/CSS — mostly ugly, but entirely mine.</p>
+        <span class="t-badge">Origin</span>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-year">2022</div>
+        <div class="t-title">Class 10 — 97%</div>
+        <p class="t-desc">Proved to myself that discipline works. Topped the board exams while still carving out time for the court and the screen.</p>
+        <span class="t-badge">Academic milestone</span>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-year">2024</div>
+        <div class="t-title">Shipped 5 real projects</div>
+        <p class="t-desc">From a mind game to study trackers and proposal letter generators — each project taught me more than any tutorial could.</p>
+        <span class="t-badge">Builder era</span>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-year">2026</div>
+        <div class="t-title">NEET — the final exam</div>
+        <p class="t-desc">Class 12, full focus. Every hour of prep is a step toward medicine. The code doesn't stop — it just runs on a tighter schedule.</p>
+        <span class="t-badge">Present</span>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-year">Soon</div>
+        <div class="t-title">MBBS &amp; beyond</div>
+        <p class="t-desc">The plan: become a doctor who can also build the tools doctors actually need.</p>
+        <span class="t-badge">The goal</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <div class="projects-head reveal">
+<!-- ══ PROJECTS ══ -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="projects-header reveal">
       <div>
         <div class="eyebrow">What I've built</div>
-        <h2 class="projects-title">Projects &amp; <em>experiments</em></h2>
+        <h2 class="section-title">Projects &amp; <em>experiments</em></h2>
       </div>
       <div class="projects-count">05</div>
     </div>
 
     <div class="projects-grid reveal">
 
-      <a class="p-card p-feat" href="https://fun-time-eight.vercel.app/" target="_blank">
-        <div class="p-num">Project 01</div>
+      <!-- Featured -->
+      <a class="p-card p-feat" href="https://fun-time-eight.vercel.app/" target="_blank" rel="noopener">
+        <div class="p-top">
+          <div class="p-num">Project 01 · Featured</div>
+          <div class="p-ext"><span class="p-ext-icon">↗</span></div>
+        </div>
         <div class="p-name">Mind Game</div>
-        <div class="p-desc">Brain-twisting mini-game for the moments between study sessions. Built to keep the mind sharp when textbooks aren't enough.</div>
-        <span class="p-arrow">Visit site →</span>
+        <div class="p-desc">Brain-twisting mini-game built for the minutes between study sessions. Keeps the mind sharp when textbooks aren't enough. Because staying sharp is a full-time job.</div>
+        <div class="p-tech">
+          <span class="p-tag">JavaScript</span>
+          <span class="p-tag">HTML/CSS</span>
+          <span class="p-tag">Game Logic</span>
+          <span class="p-tag">Vercel</span>
+        </div>
       </a>
 
-      <a class="p-card p-sm1" href="https://focus-sigma-ruby.vercel.app/" target="_blank">
-        <div class="p-num">Project 02</div>
+      <!-- Tall -->
+      <a class="p-card p-tall" href="https://focus-sigma-ruby.vercel.app/" target="_blank" rel="noopener">
+        <div class="p-art">Focus</div>
+        <div class="p-top">
+          <div class="p-num">Project 02</div>
+          <div class="p-ext"><span class="p-ext-icon">↗</span></div>
+        </div>
         <div class="p-name">Study Tracker</div>
-        <div class="p-desc">A focus dashboard for serious students. Track sessions, lock in. Built for PC and laptop.</div>
-        <span class="p-arrow">Open →</span>
+        <div class="p-desc">A focus dashboard for serious students. Track sessions, lock in. Built for desktop — no distractions, no excuses.</div>
+        <div class="p-tech">
+          <span class="p-tag">Dashboard</span>
+          <span class="p-tag">Productivity</span>
+        </div>
       </a>
 
-      <a class="p-card p-sm2" href="https://erenyeager-11.github.io/gentle-notes/" target="_blank">
-        <div class="p-num">Project 03</div>
+      <!-- Small 1 -->
+      <a class="p-card p-sm1" href="https://erenyeager-11.github.io/gentle-notes/" target="_blank" rel="noopener">
+        <div class="p-top">
+          <div class="p-num">Project 03</div>
+          <div class="p-ext"><span class="p-ext-icon">↗</span></div>
+        </div>
         <div class="p-name">Gentle Cards</div>
         <div class="p-desc">Soft, minimal note cards for thoughts worth holding carefully.</div>
-        <span class="p-arrow">Open →</span>
+        <div class="p-tech"><span class="p-tag">Notes</span><span class="p-tag">Minimal UI</span></div>
       </a>
 
-      <a class="p-card p-sm3" href="https://for-you-gray-two.vercel.app/" target="_blank">
-        <div class="p-num">Project 04</div>
+      <!-- Small 2 -->
+      <a class="p-card p-sm2" href="https://for-you-gray-two.vercel.app/" target="_blank" rel="noopener">
+        <div class="p-top">
+          <div class="p-num">Project 04</div>
+          <div class="p-ext"><span class="p-ext-icon">↗</span></div>
+        </div>
         <div class="p-name">Proposal Letters</div>
         <div class="p-desc">Beautiful letter templates for the moments that matter most.</div>
-        <span class="p-arrow">Open →</span>
+        <div class="p-tech"><span class="p-tag">Templates</span><span class="p-tag">Design</span></div>
       </a>
 
-      <a class="p-card p-sm4" href="https://erenyeager-11.github.io/Arjuna-OG/" target="_blank">
-        <div class="p-num">Project 05</div>
+      <!-- Wide bottom -->
+      <a class="p-card p-wide" href="https://erenyeager-11.github.io/Arjuna-OG/" target="_blank" rel="noopener" style="grid-column:1/6;grid-row:3;">
+        <div class="p-top">
+          <div class="p-num">Project 05</div>
+          <div class="p-ext"><span class="p-ext-icon">↗</span></div>
+        </div>
         <div class="p-name">Link Hub</div>
-        <div class="p-desc">A clean personal link-in-bio. Everything in one place.</div>
-        <span class="p-arrow">Open →</span>
+        <div class="p-desc">A clean personal link-in-bio. Everything in one place, nothing in the way.</div>
+        <div class="p-tech"><span class="p-tag">Link-in-bio</span><span class="p-tag">Personal</span></div>
       </a>
 
     </div>
   </div>
 </section>
 
-<!-- ══ 04 · INTERESTS ══ -->
-<section class="chapter" id="interests">
-  <div class="chapter-num">04</div>
-  <div class="interests-inner">
-
+<!-- ══ INTERESTS ══ -->
+<section id="interests">
+  <div class="section-inner">
     <div class="reveal">
       <div class="eyebrow">What I live for</div>
-      <h2 class="interests-title">Beyond the<br><em>textbooks</em></h2>
+      <h2 class="section-title">Beyond the <em>textbooks</em></h2>
     </div>
-
-    <div class="interests-list reveal">
-      <div class="interest-row">
-        <div class="ir-left">
-          <span class="ir-num">01</span>
-          <span class="ir-icon">🏸</span>
-          <span class="ir-name">Badminton</span>
+    <div class="interests-grid">
+      <div class="interest-list reveal-l">
+        <div class="i-row">
+          <div class="ir-left">
+            <span class="ir-num">01</span>
+            <span class="ir-icon">🏸</span>
+            <span class="ir-name">Badminton</span>
+          </div>
+          <span class="ir-tag">My first love — the court is the only quiet</span>
         </div>
-        <span class="ir-tag">My first love — the court is the only quiet</span>
+        <div class="i-row">
+          <div class="ir-left">
+            <span class="ir-num">02</span>
+            <span class="ir-icon">⚽</span>
+            <span class="ir-name">Soccer</span>
+          </div>
+          <span class="ir-tag">Delhi grounds, full speed, no regrets</span>
+        </div>
+        <div class="i-row">
+          <div class="ir-left">
+            <span class="ir-num">03</span>
+            <span class="ir-icon">🏛️</span>
+            <span class="ir-name">Ancient Arts</span>
+          </div>
+          <span class="ir-tag">Old scripts &amp; beauty time couldn't erase</span>
+        </div>
+        <div class="i-row">
+          <div class="ir-left">
+            <span class="ir-num">04</span>
+            <span class="ir-icon">🖥️</span>
+            <span class="ir-name">UI Design</span>
+          </div>
+          <span class="ir-tag">Interfaces that feel like they were always there</span>
+        </div>
+        <div class="i-row">
+          <div class="ir-left">
+            <span class="ir-num">05</span>
+            <span class="ir-icon">🔬</span>
+            <span class="ir-name">Medicine</span>
+          </div>
+          <span class="ir-tag">The long game — NEET, then beyond</span>
+        </div>
       </div>
-      <div class="interest-row">
-        <div class="ir-left">
-          <span class="ir-num">02</span>
-          <span class="ir-icon">⚽</span>
-          <span class="ir-name">Soccer</span>
-        </div>
-        <span class="ir-tag">Delhi grounds, full speed, no regrets</span>
-      </div>
-      <div class="interest-row">
-        <div class="ir-left">
-          <span class="ir-num">03</span>
-          <span class="ir-icon">🏛️</span>
-          <span class="ir-name">Ancient Arts</span>
-        </div>
-        <span class="ir-tag">Old scripts &amp; beauty time couldn't erase</span>
-      </div>
-      <div class="interest-row">
-        <div class="ir-left">
-          <span class="ir-num">04</span>
-          <span class="ir-icon">🖥️</span>
-          <span class="ir-name">UI Design</span>
-        </div>
-        <span class="ir-tag">Interfaces that feel like they were always there</span>
-      </div>
-      <div class="interest-row">
-        <div class="ir-left">
-          <span class="ir-num">05</span>
-          <span class="ir-icon">🔬</span>
-          <span class="ir-name">Medicine</span>
-        </div>
-        <span class="ir-tag">The long game- NEET, then beyond</span>
+      <div class="philosophy-card reveal-r">
+        <div class="phil-label">Philosophy</div>
+        <p class="phil-text">"Study hard enough to become a doctor. Build things <em>beautiful</em> enough to matter. Move fast enough on the court to forget everything else."</p>
+        <div class="phil-rule"></div>
+        <div class="phil-attr">— Mohammad Hammad, 2025</div>
       </div>
     </div>
-
-    <div class="philosophy-block reveal">
-      <p class="phil-text">
-        "Study hard enough to become a doctor.
-        Build things <em>beautiful</em> enough to matter.
-        Move fast enough on the court to forget everything else."
-      </p>
-      <div class="phil-attr">— Mohammad Hammad, 2025</div>
-    </div>
-
   </div>
 </section>
 
-<!-- ══ 05 · CONTACT ══ -->
-<section class="chapter" id="contact">
-  <div class="chapter-num">05</div>
-  <div class="contact-inner">
-
-    <div class="contact-left reveal">
-      <div class="eyebrow">Get in touch</div>
-      <h2>Let's talk about<br><em>anything</em></h2>
-      <p>Whether it's a collab, a question, or just saying hi, I read everything. Might be slow during exam season, but I always reply.</p>
-
-      <div class="socials">
-        <a class="s-pill" href="https://github.com/erenyeager-11" target="_blank">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-          GitHub 
-        </a>
-        <a class="s-pill" href="https://instagram.com/hamnerdd" target="_blank">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          Instagram 
-        </a>
-        <a class="s-pill" href="https://t.me/HAMMADGOTNOCHILL" target="_blank">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-          Telegram
-        </a>
-        <a class="s-pill" href="https://discord.com/users/1236627521810989057" target="_blank">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
-          Discord
-        </a>
-        <a class="s-pill" href="mailto:hammadpvt.2@gmail.com">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-          Mail
-        </a>
+<!-- ══ SKILLS ══ -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="eyebrow">What I use</div>
+      <h2 class="section-title">Skills &amp; <em>tools</em></h2>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-cat">
+        <div class="sk-icon">🌐</div>
+        <div class="sk-title">Frontend</div>
+        <div class="sk-list">
+          <div class="sk-item">
+            <span class="sk-name">HTML / CSS</span>
+            <div class="sk-bar-bg"><div class="sk-bar" style="width:90%"></div></div>
+          </div>
+          <div class="sk-item">
+            <span class="sk-name">JavaScript</span>
+            <div class="sk-bar-bg"><div class="sk-bar" style="width:78%"></div></div>
+          </div>
+          <div class="sk-item">
+            <span class="sk-name">UI / UX Design</span>
+            <div class="sk-bar-bg"><div class="sk-bar" style="width:82%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="sk-icon">⚗️</div>
+        <div class="sk-title">Science &amp; Prep</div>
+        <div class="sk-list">
+          <div class="sk-item">
+            <span class="sk-name">Biology</span>
+            <div class="sk-bar-bg"><div class="sk-bar" style="width:88%"></div></div>
+          </div>
+          <div class="sk-item">
+            <span class="sk-name">Chemistry</span>
+            <div class="sk-bar-bg"><div class="sk-bar" style="width:80%"></div></div>
+          </div>
+          <div class="sk-item">
+            <span class="sk-name">Physics</span>
+            <div class="sk-bar-bg"><div class="sk-bar" style="width:74%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="sk-icon">🛠️</div>
+        <div class="sk-title">Tools</div>
+        <div class="sk-list">
+          <div class="sk-item">
+            <span class="sk-name">Vercel / GitHub Pages</span>
+            <div class="sk-bar-bg"><div class="sk-bar" style="width:85%"></div></div>
+          </div>
+          <div class="sk-item">
+            <span class="sk-name">Figma</span>
+            <div class="sk-bar-bg"><div class="sk-bar" style="width:70%"></div></div>
+          </div>
+          <div class="sk-item">
+            <span class="sk-name">Git</span>
+            <div class="sk-bar-bg"><div class="sk-bar" style="width:72%"></div></div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <form class="contact-form reveal" onsubmit="sendMail(event)">
-      <input type="email" id="fromEmail" placeholder="Your email" required>
-      <input type="text" id="subject" placeholder="Subject" required>
-      <textarea id="message" rows="6" placeholder="Your message..." required></textarea>
-      <button type="submit" class="btn-send">Send Message</button>
-    </form>
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="reveal-l">
+        <div class="eyebrow">Get in touch</div>
+        <h2 class="section-title">Let's talk about<br><em>anything</em></h2>
+        <p class="contact-desc">Whether it's a collab, a question, or just saying hi — I read everything. Might be slow during exam season, but I always reply.</p>
+        <div class="socials">
+          <a class="s-pill" href="https://github.com/erenyeager-11" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+            GitHub
+            <span class="s-arrow">→</span>
+          </a>
+          <a class="s-pill" href="https://instagram.com/hamnerdd" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            Instagram
+            <span class="s-arrow">→</span>
+          </a>
+          <a class="s-pill" href="https://t.me/HAMMADGOTNOCHILL" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            Telegram
+            <span class="s-arrow">→</span>
+          </a>
+          <a class="s-pill" href="https://discord.com/users/1236627521810989057" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
+            Discord
+            <span class="s-arrow">→</span>
+          </a>
+          <a class="s-pill" href="mailto:hammadpvt.2@gmail.com">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            Email — hammadpvt.2@gmail.com
+            <span class="s-arrow">→</span>
+          </a>
+        </div>
+      </div>
 
+      <div class="reveal-r">
+        <form class="contact-form" onsubmit="sendMail(event)">
+          <div class="form-row">
+            <div class="field-group">
+              <label class="form-label">Your Email</label>
+              <input type="email" id="fromEmail" placeholder="you@example.com" required>
+            </div>
+            <div class="field-group">
+              <label class="form-label">Subject</label>
+              <input type="text" id="subject" placeholder="What's this about?" required>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="form-label">Message</label>
+            <textarea id="message" rows="7" placeholder="Your message..." required></textarea>
+          </div>
+          <button type="submit" class="btn-send"><span class="btn-send-inner">Send Message →</span></button>
+        </form>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer>
-  <div class="f-logo">EREN 𒉭</div>
-  <div class="f-copy">© 2026 · Mohammad Hammad · New Delhi</div>
+  <div class="f-left">
+    <div class="f-logo">EREN 𒉭</div>
+    <div class="f-copy">Mohammad Hammad · New Delhi</div>
+  </div>
+  <div class="f-right">© 2026 · Built with obsession</div>
 </footer>
 
 <script>
+/* CURSOR */
+const cur=document.getElementById('cur');
+const trail=document.getElementById('cur-trail');
+let mx=0,my=0,tx=0,ty=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+function animTrail(){tx+=(mx-tx)*.15;ty+=(my-ty)*.15;trail.style.left=tx+'px';trail.style.top=ty+'px';requestAnimationFrame(animTrail);}
+animTrail();
+
+/* SEND MAIL */
 function sendMail(e){
   e.preventDefault();
   const from=document.getElementById('fromEmail').value;
@@ -630,12 +730,39 @@ function sendMail(e){
   const msg=document.getElementById('message').value;
   window.location.href=`mailto:hammadpvt.2@gmail.com?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent('From: '+from+'\n\n'+msg)}`;
 }
+
+/* REVEAL ON SCROLL */
 const obs=new IntersectionObserver(entries=>{
   entries.forEach((e,i)=>{
-    if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*90);
+    if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*80);
   });
-},{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+},{threshold:.08});
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el=>obs.observe(el));
+
+/* SKILL BAR ANIMATION */
+const barObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.sk-bar').forEach(bar=>{
+        const w=bar.style.width;bar.style.width='0';
+        setTimeout(()=>bar.style.width=w,100);
+      });
+      barObs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.skills-grid').forEach(el=>barObs.observe(el));
+
+/* NAV ACTIVE LINK */
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});
+  navLinks.forEach(a=>{
+    a.style.color=a.getAttribute('href')==='#'+cur?'var(--gold)':'';
+  });
+},{ passive:true });
 </script>
 </body>
 </html>
