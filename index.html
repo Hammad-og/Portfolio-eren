@@ -258,10 +258,44 @@ section{position:relative;z-index:1;}
 .pc-new-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.25);border-radius:100px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#f5c842;margin-bottom:12px;}
 .new-dot{width:6px;height:6px;border-radius:50%;background:#f5c842;animation:statusBlink 1.6s ease-in-out infinite .3s;box-shadow:0 0 6px #f5c842;}
 
-.pf{grid-column:1/8;}.pt{grid-column:8/13;grid-row:1/3;}.ps1{grid-column:1/5;}.ps2{grid-column:5/8;}.pw{grid-column:1/5;grid-row:3;}.pb1{grid-column:5/9;grid-row:3;}.pb2{grid-column:9/13;grid-row:3;}.pq{grid-column:1/7;grid-row:4;}.pp{grid-column:7/13;grid-row:4;}.pbq{grid-column:1/7;grid-row:5;}.pmore{grid-column:7/13;grid-row:5;}
+/* NEW — "Just a Try" badge style */
+.pc-try-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(255,107,107,.08);border:1px solid rgba(255,107,107,.28);border-radius:100px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#ff9eb5;margin-bottom:12px;}
+.try-dot{width:6px;height:6px;border-radius:50%;background:#ff9eb5;animation:statusBlink 1.6s ease-in-out infinite .6s;box-shadow:0 0 6px #ff9eb5;}
+
+.pf{grid-column:1/8;}.pt{grid-column:8/13;grid-row:1/3;}.ps1{grid-column:1/5;}.ps2{grid-column:5/8;}.pw{grid-column:1/5;grid-row:3;}.pb1{grid-column:5/9;grid-row:3;}.pb2{grid-column:9/13;grid-row:3;}.pq{grid-column:1/7;grid-row:4;}.pp{grid-column:7/13;grid-row:4;}.pbq{grid-column:1/7;grid-row:5;}.pmore{grid-column:7/13;grid-row:5;}.pai{grid-column:1/13;grid-row:6;}
 .pf .pc-name{font-size:34px;}
 .pt{justify-content:flex-end;}
 .pt-art{position:absolute;top:0;left:0;right:0;height:52%;display:flex;align-items:center;justify-content:center;font-size:80px;opacity:.04;font-weight:700;border-bottom:1px solid var(--border);}
+
+/* AI card special glow */
+.pai{
+  background:linear-gradient(135deg,rgba(108,99,255,.06),rgba(0,212,255,.04));
+  border:1px solid rgba(108,99,255,.3);
+  position:relative;
+  overflow:hidden;
+}
+.pai::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at 20% 50%,rgba(108,99,255,.08),transparent 60%),radial-gradient(ellipse at 80% 50%,rgba(0,212,255,.06),transparent 60%);
+  pointer-events:none;
+}
+.pai:hover{
+  border-color:rgba(108,99,255,.6);
+  box-shadow:0 32px 72px rgba(0,0,0,.6),0 0 0 1px rgba(108,99,255,.3),0 0 60px rgba(108,99,255,.08);
+}
+.pai-inner{display:flex;align-items:center;gap:32px;width:100%;flex-wrap:wrap;}
+.pai-left{flex:1;min-width:260px;}
+.pai-right{flex:2;min-width:260px;}
+.pai-models{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+.pai-model-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.25);border-radius:8px;font-size:11px;color:var(--text2);transition:all .3s;}
+.pai-model-chip .chip-dot{width:5px;height:5px;border-radius:50%;background:var(--primary2);}
+.pai-model-chip.free-tag{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;background:rgba(0,255,120,.1);border:1px solid rgba(0,255,120,.25);color:#4dffaa;border-radius:100px;}
+.pai-model-chip.fast-tag{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);color:var(--cyan);border-radius:100px;}
+.pai-model-chip.power-tag{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.25);color:#f5c842;border-radius:100px;}
+.pai-glow-icon{font-size:52px;filter:drop-shadow(0 0 20px rgba(108,99,255,.5));animation:aiPulse 3s ease-in-out infinite;}
+@keyframes aiPulse{0%,100%{filter:drop-shadow(0 0 20px rgba(108,99,255,.5));}50%{filter:drop-shadow(0 0 36px rgba(0,212,255,.7));}}
 
 /* INTERESTS */
 #interests{background:var(--bg);border-top:1px solid var(--border);padding:120px 60px;}
@@ -344,10 +378,11 @@ footer{border-top:1px solid var(--border);padding:32px 60px;display:flex;justify
 
 @media(max-width:1100px){
   .projects-grid{grid-template-columns:1fr 1fr;}
-  .pf,.pt,.ps1,.ps2,.pw,.pb1,.pb2,.pq,.pp,.pbq,.pmore{grid-column:auto;grid-row:auto;}
+  .pf,.pt,.ps1,.ps2,.pw,.pb1,.pb2,.pq,.pp,.pbq,.pmore,.pai{grid-column:auto;grid-row:auto;}
   .journey-layout{grid-template-columns:1fr;}
   .journey-kb-panel{position:static;margin-top:40px;}
   .tk-grid{grid-template-columns:repeat(4,1fr);}
+  .pai-inner{flex-direction:column;gap:20px;}
 }
 @media(max-width:980px){
   nav{padding:16px 20px;}
@@ -546,7 +581,7 @@ footer{border-top:1px solid var(--border);padding:32px 60px;display:flex;justify
   <text x="55" y="245" font-size="8" fill="#f5c842" opacity="0.4">★</text>
 </svg>
       <div class="float-badge fb1"><span class="fb-icon">🏆</span><div><div class="fb-val">97%</div><div class="fb-label">Class 10</div></div></div>
-      <div class="float-badge fb2"><span class="fb-icon">🚀</span><div><div class="fb-val">9+ Projects</div><div class="fb-label">Shipped</div></div></div>
+      <div class="float-badge fb2"><span class="fb-icon">🚀</span><div><div class="fb-val">11+ Projects</div><div class="fb-label">Shipped</div></div></div>
     </div>
 
     <div class="keyboard-scene">
@@ -615,7 +650,7 @@ footer{border-top:1px solid var(--border);padding:32px 60px;display:flex;justify
         </div>
       </div>
       <div class="about-stats reveal-r">
-        <div class="stat-card"><div><div class="stat-num">9+</div><div class="stat-label">Projects Shipped</div></div><span style="font-size:32px;">🚀</span></div>
+        <div class="stat-card"><div><div class="stat-num">11+</div><div class="stat-label">Projects Shipped</div></div><span style="font-size:32px;">🚀</span></div>
         <div class="stat-card"><div><div class="stat-num">3</div><div class="stat-label">Live Telegram Bots</div></div><span style="font-size:32px;">🤖</span></div>
         <div class="stat-card"><div><div class="stat-num">∞</div><div class="stat-label">Curiosity Remaining</div></div><span style="font-size:32px;">🔭</span></div>
       </div>
@@ -649,8 +684,8 @@ footer{border-top:1px solid var(--border);padding:32px 60px;display:flex;justify
         <div class="t-item">
           <div class="t-dot"></div>
           <div class="t-year">2025</div>
-          <div class="t-title">Shipped 9 real projects</div>
-          <p class="t-desc">From mind games to study trackers, Quran apps, Telegram bots, chess engines, quiz bots, and proposal generators — each project taught me more than any tutorial could.</p>
+          <div class="t-title">Shipped 11 real projects</div>
+          <p class="t-desc">From mind games to study trackers, Quran apps, Telegram bots, chess engines, quiz bots, proposal generators, and an AI platform — each project taught me more than any tutorial could.</p>
           <span class="t-badge">Builder Era</span>
         </div>
         <div class="t-item">
@@ -784,7 +819,7 @@ footer{border-top:1px solid var(--border);padding:32px 60px;display:flex;justify
         <div class="eyebrow">What I've built</div>
         <h2 class="section-h" style="margin-bottom:0;">Projects &amp; <em>experiments</em></h2>
       </div>
-      <div class="proj-count">9</div>
+      <div class="proj-count">11</div>
     </div>
     <div class="projects-grid reveal">
       <a class="proj-card pf" href="https://mind-games-seven.vercel.app/" target="_blank" rel="noopener">
@@ -850,6 +885,10 @@ footer{border-top:1px solid var(--border);padding:32px 60px;display:flex;justify
         <div class="pc-desc">A clean, respectful digital Quran app — beautiful typography, a reading experience that honours the text. Faith meets frontend.</div>
         <div class="pc-tech"><span class="pc-tag">React/Vercel</span><span class="pc-tag">Islamic App</span><span class="pc-tag">Typography</span><span class="pc-tag">UI Design</span></div>
       </a>
+      <div class="proj-card pp" style="background:transparent;border:1px dashed rgba(108,99,255,.12);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--text2);">
+        <div style="font-size:36px;opacity:.3;">+</div>
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.4;">More coming soon</div>
+      </div>
       <a class="proj-card pbq" href="https://t.me/MY_QUIZGUARD_BOT" target="_blank" rel="noopener">
         <div class="pc-top"><div class="pc-num">Project 09 · New Drop</div><div class="pc-arrow"><span class="pc-arrow-icon">↗</span></div></div>
         <div class="pc-new-badge"><span class="new-dot"></span>Just launched</div>
@@ -859,10 +898,45 @@ footer{border-top:1px solid var(--border);padding:32px 60px;display:flex;justify
         <div class="pc-tg-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>@MY_QUIZGUARD_BOT</div>
         <div class="pc-tech" style="margin-top:8px;"><span class="pc-tag">Telegram Bot</span><span class="pc-tag">NEET</span><span class="pc-tag">Quiz</span><span class="pc-tag">MCQ</span></div>
       </a>
-      <div class="proj-card pmore" style="background:transparent;border:1px dashed rgba(108,99,255,.12);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--text2);">
-        <div style="font-size:36px;opacity:.3;">+</div>
-        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.4;">More coming soon</div>
+      <div class="proj-card pmore" style="background:transparent;border:1px dashed rgba(108,99,255,.08);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--text2);">
+        <div style="font-size:28px;opacity:.2;">✦</div>
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.3;">Building more</div>
       </div>
+
+      <!-- PROJECT 10 — OmniAI (full width featured) -->
+      <a class="proj-card pai" href="https://omniai-isu2.vercel.app/" target="_blank" rel="noopener">
+        <div class="pai-inner">
+          <div class="pai-left">
+            <div class="pc-top" style="margin-bottom:14px;"><div class="pc-num">Project 10 · AI</div><div class="pc-arrow"><span class="pc-arrow-icon">↗</span></div></div>
+            <div class="pc-try-badge"><span class="try-dot"></span>Just a Try · Live Now</div>
+            <div class="pc-icon" style="font-size:36px;">🤖</div>
+            <div class="pc-name" style="font-size:38px;">OmniAI</div>
+            <div class="pc-desc" style="max-width:340px;">My own AI platform — built just to see if I could. Powered by multiple free models via Groq. Pick a model, start chatting. No paid API, no fuss — just vibes and curiosity.</div>
+            <div class="pc-tech">
+              <span class="pc-tag">HTML/CSS/JS</span>
+              <span class="pc-tag">Groq API</span>
+              <span class="pc-tag">Vercel</span>
+              <span class="pc-tag">AI</span>
+            </div>
+          </div>
+          <div class="pai-right">
+            <div class="pai-glow-icon" style="font-size:28px;font-weight:600;color:var(--primary2);margin-bottom:14px;letter-spacing:1px;">Available Models</div>
+            <div class="pai-models">
+              <div class="pai-model-chip"><span class="chip-dot" style="background:#6c63ff;"></span>Llama 3.3 70B</div>
+              <span class="pai-model-chip power-tag">Powerful</span>
+              <span class="pai-model-chip free-tag">FREE</span>
+              <div class="pai-model-chip" style="margin-top:6px;"><span class="chip-dot" style="background:#00d4ff;"></span>Llama 3.1 8B</div>
+              <span class="pai-model-chip fast-tag">Ultra Fast</span>
+              <span class="pai-model-chip free-tag">FREE</span>
+            </div>
+            <div style="margin-top:20px;font-size:12px;color:var(--text2);line-height:1.8;max-width:360px;">
+              Free models ✓<br>
+              <span style="color:rgba(108,99,255,.6);font-size:11px;letter-spacing:1px;">Built via Groq · Deployed on Vercel · Running live</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
     </div>
   </div>
 </section>
@@ -1019,7 +1093,7 @@ for(let i=0;i<90;i++)parts.push({x:Math.random()*W,y:Math.random()*H,r:Math.rand
   requestAnimationFrame(draw);
 })();
 
-const heroPhrases=['building_things = passion;','neet_prep.focus(100);','if(medicine) become(doctor);','chess.engine.deploy();','bot.deploy("@EREN_RPS_BOT");','bot.deploy("@MY_QUIZGUARD_BOT");','quran.app.launch();','ancient_arts.explore();','curiosity.level = Infinity;','mbbs.goal.achieve();'];
+const heroPhrases=['building_things = passion;','neet_prep.focus(100);','if(medicine) become(doctor);','chess.engine.deploy();','bot.deploy("@EREN_RPS_BOT");','bot.deploy("@MY_QUIZGUARD_BOT");','quran.app.launch();','ancient_arts.explore();','curiosity.level = Infinity;','mbbs.goal.achieve();','omni_ai.launch("groq");'];
 let hPI=0,hCI=0,hDel=false,hStr='';
 const hEl=document.getElementById('screenText');
 const hKeyMap={};
@@ -1035,7 +1109,7 @@ function hType(){
 }
 setTimeout(hType,2400);
 
-const journeyPhrases=['code.first_line("2024");','score = 97; // class_10','discipline.works = true;','projects.shipped >= 9;','chess.engine.build();','bot.live("@EREN_RPS_BOT");','bot.live("@MY_STUDYGUARD_BOT");','bot.live("@MY_QUIZGUARD_BOT");','quran.app.deployed();','neet.target = "2027";','doctor = future.self;','keep_building();'];
+const journeyPhrases=['code.first_line("2024");','score = 97; // class_10','discipline.works = true;','projects.shipped >= 11;','chess.engine.build();','bot.live("@EREN_RPS_BOT");','bot.live("@MY_STUDYGUARD_BOT");','bot.live("@MY_QUIZGUARD_BOT");','quran.app.deployed();','omni_ai.deployed("groq");','neet.target = "2027";','doctor = future.self;','keep_building();'];
 let jPI=0,jCI=0,jDel=false,jStr='';
 const jEl=document.getElementById('jScreenText');
 const jKeyMap={};
